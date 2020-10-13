@@ -1,3 +1,4 @@
 .cell-selected {
-	border: 2px solid blue;
+	border: 2px solid #007399!important;
+	z-index: 2;
 }
