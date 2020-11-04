@@ -1,6 +1,7 @@
 var cellValues = null;
 var inputChange = document.getElementById('input-change');
 var btnClear = document.getElementById('btn-clear');
+var btnClearAll = document.getElementById('btn-clear-all');
 
 
 // add the event keyup on the input
@@ -130,6 +131,15 @@ function setSelectedCssToCell (newid) {
 	// set the class
 	selectedCell.classList.add('cell-selected');
 }
+
+btnClearAll.addEventListener('click', function () {
+	let allCell = document.getElementsByClassName('cell');	
+	Array.prototype.forEach.call(allCell, function(el) {
+    el.innerHTML = '';
+	});
+	inputChange.value = '';
+	inputChange.setAttribute('disabled', 'disabled');
+});
 
 (function init () {
 	document.getElementById("SpreadsheetTable").innerHTML = buildTable();
