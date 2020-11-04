@@ -9,13 +9,13 @@ inputChange.addEventListener('keyup', function (e) {
 	// get id attribute from cell
 	let idTable = inputChange.getAttribute('data-id-cell');
 	// select the cell element
-	var cellTable = document.getElementById(idTable);
+	let cellTable = document.getElementById(idTable);
 	// get the coordinates
-	var rcArray = cellTable.id.split('_');
+	let rcArray = cellTable.id.split('_');
 	// get the correct cell in the variable
 
 	// check the values and attribute the new value
-	var cellIntegrety = new CellIntegrety();
+	let cellIntegrety = new CellIntegrety();
 	
 	cellValues[parseInt(rcArray[0])-1][parseInt(rcArray[1])-1] = cellIntegrety.checkNewValue(inputChange.value, cellValues);
 	
@@ -31,9 +31,9 @@ btnClear.addEventListener('click', function (e) {
 	//get the id of cell
 	let idTable = inputChange.getAttribute('data-id-cell');
 	//get the cell element of the DOM
-	var cellTable = document.getElementById(idTable);
+	let cellTable = document.getElementById(idTable);
 	// get the coordinates of the array
-	var rcArray = cellTable.id.split('_');
+	let rcArray = cellTable.id.split('_');
 	// reset the value
 	cellValues[parseInt(rcArray[0])-1][parseInt(rcArray[1])-1] = new TableCell('', '');
 	// get the cell value from the array
@@ -43,27 +43,26 @@ btnClear.addEventListener('click', function (e) {
 	// set the value on input
 	inputChange.value = cell.cellValue;
 	//create a new integrety check
-	var cellIntegrety = new CellIntegrety();
+	let cellIntegrety = new CellIntegrety();
 	// recalculate the integrety
 	cellIntegrety.recalculteValues(cellValues);
 	e.preventDefault();
 });
 
 // create the array with the number of cells
-function createFunctions(){
-	var arr = Array.from(Array(20), () => new Array(10));
-	return arr;
+function createFunctions(){	
+	return Array.from(Array(20), () => new Array(10));
 }
 
 // responsible to build the initial table
 function buildTable () {
 	// start with the table declaration
-	var divHTML = "<table border='1' cellpadding='0' cellspacing='0' class='table table-striped'>";
+	let divHTML = "<table border='1' cellpadding='0' cellspacing='0' class='table table-striped'>";
 
 	// next do the column header labels
 	divHTML += "<tr><th></th>";
 
-	for (var j = 0; j < 10; j++) {
+	for (let j = 0; j < 10; j++) {
 		divHTML += "<th>" + String.fromCharCode(j + 65) + "</th>";
 	}
 
@@ -71,13 +70,13 @@ function buildTable () {
 	divHTML += "</tr>";
 
 	// now do the main table area
-	for (var i = 1; i <= 20; i++) {
+	for (let i = 1; i <= 20; i++) {
 			divHTML += "<tr>";
 			// ...first column of the current row (row label)
 			divHTML += "<td id='" + i + "_0' class='BaseColumn'>" + i + "</td>";
 
 			// ... the rest of the columns
-			for (var j = 1; j <= 10; j++)
+			for (let j = 1; j <= 10; j++)
 					divHTML += "<td id='" + i + "_" + j + "' class='cell' onclick='selectCell(this)'></td>";
 
 			// ...end of row
@@ -99,7 +98,7 @@ function selectCell (ref) {
 	// sethe the id on the input
 	inputChange.setAttribute('data-id-cell', ref.id);
 	// get the coordinates of the array
-	var rcArray = ref.id.split('_');	
+	let rcArray = ref.id.split('_');	
 	
 	// remove disable property from array
 	inputChange.removeAttribute('disabled');
@@ -133,15 +132,22 @@ function setSelectedCssToCell (newid) {
 }
 
 btnClearAll.addEventListener('click', function () {
+	// get all cell elements
 	let allCell = document.getElementsByClassName('cell');	
+	// loop
 	Array.prototype.forEach.call(allCell, function(el) {
+		// clear all cell values
     el.innerHTML = '';
 	});
+	// reset the input value;
 	inputChange.value = '';
+	// set the input as disabled by default
 	inputChange.setAttribute('disabled', 'disabled');
 });
 
 (function init () {
+	// build a table in the right element
 	document.getElementById("SpreadsheetTable").innerHTML = buildTable();
+	// set the array for cell values
 	cellValues = createFunctions();
 })();
